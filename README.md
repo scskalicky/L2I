@@ -1,2 +1,6 @@
 # L2_irony
- replications of L2 irony studies
+ 
+ 
+ Hosting site for replication of L2 Irony studies. 
+
+ For the jsPsych files. 
