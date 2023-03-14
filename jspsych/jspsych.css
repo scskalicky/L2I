@@ -514,3 +514,44 @@
 #jspsych-data-display {
   text-align: left;
 }
+
+
+.consent_title {
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.consent_headings {
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  font-weight: bold;
+  text-align:left;
+}
+
+.consent_prose {
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  width: 800px; 
+  text-align:left;
+
+}
+
+
+/*Control size of Cloze text boxes*/
+.cloze input[type=text]{
+  size: 4;
+}
+
+.cloze {
+  text-align:justify;
+  width: 750px;
+}
+
+
+/* make smaller instruction screens*/
+.instructions {
+  text-align:justify;
+  width: 600px
+
+}

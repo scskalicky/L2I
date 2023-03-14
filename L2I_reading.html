@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Reading Test</title>
+  <script type = "text/javascript" src="jquery-3.6.0.js"></script>
+  <script src = "jspsych/jspsych.js"></script>
+  <script src = 'jspsych/plugin-fullscreen.js'></script>
+  <script src = "jspsych/plugin-html-keyboard-response.js"></script>
+  <script src = "jspsych/plugin-html-button-response.js"></script>
+  <script src = "jspsych/plugin-instructions.js"></script>
+  <script src = "jspsych/plugin-survey-text.js"></script>
+  <script src = "jspsych/plugin-survey-likert.js"></script>
+  <script src = "jspsych/plugin-survey-html-form.js"></script>
+  <script src = "jspsych/plugin-survey-multi-choice.js"></script>
+  <script src = "jspsych/plugin-survey.js"></script>
+  <script src = "jspsych/plugin-cloze19.js"></script>
+  <script src="jspsych/plugin-preload.js"></script>
+  <script src='lextale_stimuli.js'></script>
+  <script src='irony_stimuli.js'></script>
+  <link href = "jspsych/jspsych.css" rel="stylesheet" type = "text/css" />
+
+  </head>
+  <body></body>  
+  <script>
+  const jsPsych = initJsPsych({
+    show_progress_bar: true,
+    message_progress_bar: '<span style = "color:red";><b>DO NOT REFRESH YOUR BROWSER OR HIT BACK!<span></b>',
+    on_finish: function(data){
+      const subject_url = jsPsych.data.get().select('subject').values[0];
+     // const email1_url = jsPsych.data.get().select('uni_email').values[0];
+     // const email2_url = jsPsych.data.get().select('alternate_email').values[0];
+      console.log(subject_url);
+      //console.log(email1_url);
+      //console.log(email2_url);
+      var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
+		  jsPsych.data.addProperties({lextale_score: lextale_score});
+      jsPsych.data.displayData();
+     // console.log('finished')
+      // save data to csv
+      //saveData(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().csv());
+      //window.location = "https://vuw.qualtrics.com/jfe/form/SV_56BeZAD6eb5pS2W?sub=".concat(subject_url).concat('&email1=').concat(email1_url).concat('&email2=').concat(email2_url)
+    },
+  });
+  </script>
+</html>
+
+<script>
+
+// init timeline
+var timeline = [];
+
+const subject = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: "Subject Name", name: 'name', required: true}
+  ],
+  on_finish: function(data){
+   jsPsych.data.addProperties({
+    subject:  data.response.name.concat('_', performance.now())}),
+    console.log(data)
+  }
+};
+
+const instructions_general = {
+  type: jsPsychHtmlButtonResponse,
+    stimulus: '<p class = "instructions">Thank you for participating in this study! In this experiment, you will complete FOUR tasks: a demographic survey, a text completion activity, a word recognition activity, and a sentence reading activity. You should set aside at least X MINUTES to complete this experiment. This experiment should be completed in one go - you cannot save your data and return later.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue with this project.<br><br> Finally, please be sure to take this test on a computer in a quiet room. Please turn off all music, televisions, or other distractions, and please put your phone away during the experiment.</p><br>',
+    choices: ['I Understand']
+}
+
+
+var enter_fullscreen = {
+  type: jsPsychFullscreen,
+  fullscreen_mode: true,
+  message: '<p class = "instructions">Your browser will now switch to full screen mode. Please leave your browser in full screen for the duration of the test.</p><br>'
+};
+
+
+
+
+/*  
+#################
+DEMOGRAPHIC SURVEY
+#################
+*/
+
+
+const instructions_demo = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p class = "instructions">Before we start, please answer some questions about yourself and your language knowledge.<br><br>Please press "Continue".</p><br>',
+  choices: ['Continue']
+}
+
+const age = {
+    type: jsPsychSurveyHtmlForm,
+    html:'<div><ol type="1">' + 'Please enter your current age in years</br> <input type= "number" name= "age" id= "age" min= "0" max= "100" maxlength = "3" required>'+
+    '</ol></div>',
+      button_label: "Next",
+      dataAsArray: false,
+      required: true,
+      on_finish: function(data){
+        jsPsych.data.addProperties({age: data.response});
+        data.trial_item = 'age_question';
+    }
+      };  		
+      
+const sex = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [{prompt: "Please select your sex<br>",
+    options: ["Female", "Male", "I prefer not to answer"], required: true}],
+    on_finish: function(data){
+        jsPsych.data.addProperties({sex: data.response})
+        data.trial_item = 'sex_question';
+    }
+    };
+
+const education_level = {
+type: jsPsychSurveyMultiChoice,
+questions: [{prompt: "Current level of education<br>",
+options: ['First Year University', 'Second Year University', 'Third Year University', 'Fourth Year University', 'Postgraduate University'], required: true}],
+on_finish: function(data){
+    jsPsych.data.addProperties({education_level: data.response})
+    data.trial_item = 'education_level';
+}
+};
+
+const country_background = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: 'What is your country of birth?', required: true, name: 'country_of_birth'},
+    {prompt: 'What country do you currently live in?', required: true, name: 'country_of_residence'},
+    {prompt: 'Have you ever been to an English-speaking country?<br> If yes, for how long (weeks/months/years)?', required: true, name: 'es_country_time'}
+  ],
+    on_finish: function(data){
+      jsPsych.data.addProperties({country_of_birth: data.response.country_of_birth})
+      jsPsych.data.addProperties({country_of_residence: data.response.country_of_residence})
+      jsPsych.data.addProperties({es_country_time: data.response.es_country_time})
+
+      }
+};
+
+const language_background = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: 'What is your native language? (If you grew up with more than one language, please specify)', required: true, name: 'native_language'},
+    {prompt: 'Do you speak a foreign language in addition to English?  Which language(s)?', required: false, name: 'other_foreign_langs'},
+  ],
+    on_finish: function(data){
+      jsPsych.data.addProperties({native_language: data.response.native_language})
+      jsPsych.data.addProperties({other_foreign_langs: data.response.other_foreign_langs})
+      }
+};
+
+const years_learning_english = {
+    type: jsPsychSurveyHtmlForm,
+    html:'<div><ol type="1">' + 'For how many years have you been learning English?</br> <input type= "number" name= "years_learning_english" id= "years_learning_english" min= "0" max= "100" maxlength = "3" required>'+
+    '</ol></div>',
+      button_label: "Next",
+      dataAsArray: false,
+      required: true,
+      on_finish: function(data){
+        jsPsych.data.addProperties({years_learning_english: data.response});
+        data.trial_item = 'years_learning_english_question';
+    }
+      };  		
+      
+const english_outside_classroom = {
+    type: jsPsychSurveyHtmlForm,
+    html:'<div><ol type="1">' + 'In a typical week how many hours do you spend learning English outside the classroom?</br> <input type= "number" name= "english_outside_classroom" id= "english_outside_classroom" min= "0" max= "100" maxlength = "3" required>'+
+    '</ol></div>',
+      button_label: "Next",
+      dataAsArray: false,
+      required: true,
+      on_finish: function(data){
+        jsPsych.data.addProperties({english_outside_classroom: data.response});
+        data.trial_item = 'english_outside_classroom_question';
+    }
+      };  		
+      
+const english_activities = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: 'What kinds of activities did you do to learn English outside the classroom?<br> (e.g. reading books; watching English movies; practice speaking; interacting with parents or friends in English).', required: true, rows: 2, name: 'english_activities'},
+  ],
+    on_finish: function(data){
+      jsPsych.data.addProperties({english_activities: data.response.english_activities})
+      }
+};
+
+const self_ratings_english = {
+  type: jsPsychSurveyLikert,
+  preamble: 'Rate your ability in English in listening and speaking using the following scale.',
+  questions: [
+    {
+      prompt: "Ease of understanding English.", 
+      labels: ["Difficult", "", "", "", "", "","Easy"],
+      name: 'ease_of_understanding_english',
+      required: true
+    },
+    {
+      prompt: "Ability to hold a conversation in English", 
+      labels: ["Weak", "", "", "", "", "","Strong"],
+      name: 'ability_hold_conversations_english',
+      required: true
+    },
+
+    {
+      prompt: "Ability to speak fluently in English", 
+      name: 'ability_speak_fluently_english',
+      labels: ["Weak", "", "", "", "", "","Strong"],
+      required: true
+    }
+  ],
+  on_finish: function(data){
+      jsPsych.data.addProperties({ease_understand_english: data.response.ease_of_understanding_english})
+      jsPsych.data.addProperties({ability_hold_convo_english: data.response.ability_hold_conversations_english})
+      jsPsych.data.addProperties({ability_speak_fluently_english: data.response.ability_speak_fluently_english})
+
+      }
+};
+
+/* 
+#############
+C-TEST C-TEST
+#############
+*/
+
+
+
+const instructions_ctest = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<b>Text Completion Activity</b><br><p class = "instructions">Thank you. In this next part, you will complete a short text completion activity. <br><br>You will see four short passages, one-at-a-time. Some of the words in each passage are not complete. An empty box shows the words that are not complete. Please note that the length of the box does not indicate the number of letters needed to complete a word. Sometimes you will need only one or two letters to complete a word but at other times you will need several letters. Please try to complete all the words in all four passages by typing the missing letters into the boxes. <br><br>If you are unable to complete a word, just go onto the next word. However, once you move on to a new text, you cannot return to the previous text. <br><br>Press "Continue" when you are ready to begin.',
+    choices: ['Continue']
+}
+
+var CT_stim = [
+    {
+    c_text: 'One cool autumn evening, Bob L., a young professional, returned home from a trip to the supermarket to find his computer gone. Gone! <br><br>All so%% of cra%% thoughts ra%% through his mind: H%% it be%% stolen? H%% it be%% kidnapped? H%% searched h%% house f%% <br>a cl%% until he noticed a sm%% piece of printout pa%% stuck un%% <br>a mag%% on his refrigerator do%%.<br><br> His heart sank as he read this simple message: CAN\'T CONTINUE, FILE CLOSED, BYE.', c_text_id: 'CTEST1', data: {stim_id: 'CTEST_1'}
+},
+{
+    c_text: 'There is a third factor besides farming and herding in the spread of man-made deserts: deforestation.<br><br>The progre%% destruction o%% the Th%% World\'s st%% of tr%%<br>is damaging not on%% in d%% regions: every%% it occurs it c%% accelerate t%% decay o%% the so%% and re%% its capa%% to fe%% people.<br><br>It can reduce rainfall and lead to drought. ', c_text_id: 'CTEST2', data: {stim_id: 'CTEST_2'}
+},
+{
+    c_text: 'There are certain things which no student can do without and others which may not be as necessary as you thought.<br><br> It m%% be wo%% considering so%% small hi%%. You m%% <br>find your%% in ne%% of elect%% appliances su%% as li%% bulbs,<br> adap%% or plugs. These c%% be obta%% from ma%% places. GILL i%% a go%% hardware sh%% and try%% to fi%% it is a chal%%.<br><br> It is hidden in a little alley leading off High Street called Wheatsheaf Yard.', c_text_id: 'CTEST3', data: {stim_id: 'CTEST_3'}
+},
+{
+    c_text: 'The private conscience of the leader - rather than his public responsibilities - becomes the focal point of politics.<br><br> Internal crit%% - possession o%%, devotion t%%, and stan%% up f%% private prin%% - become t%% standards o%% political judg%%. Constituents disa%%, and w%% are left with a poli%% leader deter%% policy o%% the ba%% of compa%% with h%% private princ%%.<br><br> From this perspective we can better understand why Goldwater voted against the Civil Rights Act of 1964.', c_text_id: 'CTEST4', data: {stim_id: 'CTEST_4'}
+}
+]
+
+
+
+var CT_trials = {
+timeline:[
+{
+type: jsPsychHtmlButtonResponse,
+stimulus: 'Press "Continue" to see the next text.<br><br>',
+choices: ['Continue'],
+},
+{
+type: jsPsychCloze,
+text: jsPsych.timelineVariable('c_text'),
+data: jsPsych.timelineVariable("data"),
+button_text: '<br>Submit Answers</b>',
+trial_duration: 3600000
+// on_finish: function(){ // save the c-test trial as a csv just in case. 
+//   saveTrialData(jsPsych.data.get().select('subject').values[0].concat('_').concat(Date.now().toString()).concat('_').concat(jsPsych.timelineVariable('c_text_id')), jsPsych.data.getLastTimelineData().csv(),
+//   jsPsych.data.get().select('subject').values[0]);
+ // console.log(jsPsych.data.getLastTimelineData())
+//}
+}
+], timeline_variables: CT_stim, randomize_order: false
+};
+
+
+/* 
+
+#########
+LexTale  LexTale
+#########
+
+*/
+
+const lextale_preamble = {
+  type: jsPsychHtmlButtonResponse,
+    stimulus: '<p class = "instructions">Next, you will complete a word recognition task. This task should take about five minutes.<br><br>Please press "Continue" to begin the word recognition task.</p><br>',
+    choices: ['Continue']
+}
+
+	// initialise vars to store real word and non word tallies
+	var rw_score = 0;
+	var nw_score = 0;
+
+	// I've split the instructions across the screen and added a title, otherwise they should be the same as www.lextale.com
+	var instructions_lextale = {
+		type: jsPsychInstructions,
+		pages: ['<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' +  '<p class = "instructions"> This test consists of about 60 trials, in each of which you will see a string of letters. Your task is to decide whether this is an existing English word or not. If you think it is an existing English word, you click on "yes", and if you think it is not an existing English word, you click on "no".',
+		
+		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">If you are sure that the word exists, even though you don\'t know its exact meaning, you may still respond "yes". But if you are not sure if it is an existing word, you should respond "no".</br></br>',
+		
+		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">In this experiment, we use British English rather than American English spelling. For example: “realise" instead of "realize"; "colour" instead of "color", and so on. Please don\'t let this confuse you. This experiment is not about detecting such subtle spelling differences anyway.',
+
+		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">You have as much time as you like for each decision. This part of the experiment will take about 5 minutes.</br>',
+		
+		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">If everything is clear, you can now start the test.</br>'],
+
+		show_clickable_nav: true
+	};
+
+	var pre_lextale = {
+		type: jsPsychHtmlButtonResponse,
+		stimulus: 'Click "Start" to begin the Word Recognition Test<br><br>',
+		choices: ["Start"]
+	};
+
+	// you could remove this since the lextale_stimuli.js has the trial info embedded, would need to modify the if statement to access that structure instead. 
+	var lx_trials = 0;
+
+	// This is a very close simulation of the look and feel of the LexTALE test on www.lextale.com. 
+	var lextale = {
+		timeline: [{
+		type: jsPsychHtmlButtonResponse,
+		stimulus: jsPsych.timelineVariable('word'),
+		data: jsPsych.timelineVariable('data'),
+		choices: ['no', 'yes'],
+		button_html: ['<button class = "jspsy ch-btn", style = "width: 120px; height: 60px; background-color: red"><span style = "font-size: 38px">no</span></button>', '<button class = "jspsy ch-btn", style = "width: 120px; height: 60px; background-color: green"><span style = "font-size: 38px">yes</span></button>'],
+		prompt: function(){ // use a progress bar bc the original lextale has one
+			lx_trials++
+			return '<br><progress value = ' + '"' + String(lx_trials) +  '" ' + 'max = "63"></progress>'},
+		// calculate running accuracy
+		on_finish: function(data){
+			if(lx_trials > 3){
+				if(data.type == 'w' && data.response == 1){
+					rw_score++
+				} else {
+					if(data.type == 'nw' && data.response == 0){
+						nw_score++
+					}
+				} 
+				// for debugging
+			//	console.log(data.type);
+			//	console.log(nw_score);
+			//	console.log(rw_score);
+		}}
+		},
+		],
+		timeline_variables: lextale_words
+	}; 
+
+
+
+/* 
+#########################
+IRONY RECOGNITION TASK
+#########################
+*/
+
+const instructions_irony_practice = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<p class = "instructions"><b>Sentence Reading Task</b><br>This is the final task. In this part of the experiment, you will read different situations involving two people. Each situation will end with a final sentence, where one of the characters says something. Your job is to determine whether the final sentence in each situation is <i>positive</i> or <i>negative</i>.<br><br>If you think the sentence is <i>positive</i>, press the <b>p</b> key on your keyboard.<br>If you think the sentence is <i>negative</i>, press the <b>n</b> key on your keyboard.<br>There is a time limit for each situation, so you should answer as quickly and accurately as you can.<br><br> Press the SPACEBAR to continue.</p>',
+  choices: [" "]
+}
+
+
+const ready_hands = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<p class = "instructions">Remember, you will press either the "p" or the "n" key to make your answer.<br><br> Please please one hand ready to push the "p" key and one hand ready to push the "n" key now. When you are ready, press the SPACEBAR to practice on two situations.</p>',
+  choices: [" "]
+}
+
+
+const irony_prompt = "<br><br>p = positive / n = negative"
+
+const irony_practice_trials = {
+  timeline: [
+  {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: 'Press the SPACEBAR to see the next situation.<br><br>',
+    choices: [' '],
+  },
+
+  {
+type: jsPsychHtmlKeyboardResponse,
+prompt: irony_prompt,
+on_start: function(trial){
+  trial.stimulus = '<p style = "font-size:20px; text-align:center; border:dotted; width:500px;margin:auto">'.concat( jsPsych.timelineVariable('situation'))
+},
+stimulus: '',
+data: jsPsych.timelineVariable("data"),
+trial_duration: 18100,
+choices: ['p', 'n']
+}
+
+
+  ], timeline_variables: irony_stim_practice
+
+}
+
+
+const instructions_irony_real = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<p class = "instructions">You have completed the practice task. You are now ready to begin the sentence reading task. You will provide answers for a total of <b>20</b> situations. Press the SPACEBAR to begin.</p>',
+  choices: [" "]
+}
+
+const irony_trials = {
+  timeline: [
+  {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: 'Press the SPACEBAR to see the next situation.<br><br>',
+    choices: [' '],
+  },
+
+  {
+type: jsPsychHtmlKeyboardResponse,
+prompt: irony_prompt,
+on_start: function(trial){
+  trial.stimulus = '<p style = "font-size:20px; text-align:center; border:dotted; width:500px;margin:auto">'.concat( jsPsych.timelineVariable('situation'))
+},
+stimulus: '',
+data: jsPsych.timelineVariable("data"),
+trial_duration: 18100,
+choices: ['p', 'n']
+}
+
+
+  ], timeline_variables: irony_stim, randomize_order: true
+
+}
+
+
+
+
+
+// define the timeline order
+
+const introduction = [instructions_general, enter_fullscreen]
+
+const demographic_timeline = [instructions_demo, age, sex, education_level, country_background, language_background, english_outside_classroom, years_learning_english, english_activities, self_ratings_english]
+const ctest_timeline = [instructions_ctest, CT_trials]
+const lextale_timeline = [lextale_preamble, instructions_lextale, pre_lextale, lextale]
+const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice_trials,instructions_irony_real, irony_trials]
+
+
+// use spread operator (...) to push the arrays
+timeline.push(
+  ...introduction,
+  ...demographic_timeline,
+  ...ctest_timeline,
+  ...lextale_timeline,
+  ...irony_timeline,
+);
+ 
+jsPsych.run(timeline);
+
+</script>
