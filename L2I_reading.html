@@ -63,7 +63,7 @@ const subject = {
 
 const instructions_general = {
   type: jsPsychHtmlButtonResponse,
-    stimulus: '<p class = "instructions">Thank you for participating in this study! In this experiment, you will complete FOUR tasks: a demographic survey, a text completion activity, a word recognition activity, and a sentence reading activity. You should set aside at least X MINUTES to complete this experiment. This experiment should be completed in one go - you cannot save your data and return later.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue with this project.<br><br> Finally, please be sure to take this test on a computer in a quiet room. Please turn off all music, televisions, or other distractions, and please put your phone away during the experiment.</p><br>',
+    stimulus: '<p class = "instructions">Thank you for participating in this study! In this experiment, you will complete FOUR tasks: a demographic survey, a sentence reading activity, a text completion activity, and a word recognition activity. You should set aside at least 30 minutes to complete this experiment. This experiment should be completed in one go - you cannot save your data and return later.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue with this project.<br><br> Finally, please be sure to take this test on a computer in a quiet room. Please turn off all music, televisions, or other distractions, and please put your phone away during the experiment.</p><br>',
     choices: ['I Understand']
 }
 
@@ -228,7 +228,7 @@ C-TEST C-TEST
 
 const instructions_ctest = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<b>Text Completion Activity</b><br><p class = "instructions">Thank you. In this next part, you will complete a short text completion activity. <br><br>You will see four short passages, one-at-a-time. Some of the words in each passage are not complete. An empty box shows the words that are not complete. Please note that the length of the box does not indicate the number of letters needed to complete a word. Sometimes you will need only one or two letters to complete a word but at other times you will need several letters. Please try to complete all the words in all four passages by typing the missing letters into the boxes. <br><br>If you are unable to complete a word, just go onto the next word. However, once you move on to a new text, you cannot return to the previous text. <br><br>Press "Continue" when you are ready to begin.',
+  stimulus: '<b>Text Completion Activity</b><br><p class = "instructions">In this next part, you will complete a short text completion activity. <br><br>You will see four short passages, one-at-a-time. Some of the words in each passage are not complete. An empty box shows the words that are not complete. Please note that the length of the box does not indicate the number of letters needed to complete a word. Sometimes you will need only one or two letters to complete a word but at other times you will need several letters. Please try to complete all the words in all four passages by typing the missing letters into the boxes. <br><br>If you are unable to complete a word, just go onto the next word. However, once you move on to a new text, you cannot return to the previous text. <br><br>Press "Continue" when you are ready to begin.',
     choices: ['Continue']
 }
 
@@ -356,7 +356,7 @@ IRONY RECOGNITION TASK
 
 const instructions_irony_practice = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p class = "instructions"><b>Sentence Reading Task</b><br>This is the final task. In this part of the experiment, you will read different situations involving two people. Each situation will end with a final sentence, where one of the characters says something. Your job is to determine whether the final sentence in each situation is <i>positive</i> or <i>negative</i>.<br><br>If you think the sentence is <i>positive</i>, press the <b>p</b> key on your keyboard.<br>If you think the sentence is <i>negative</i>, press the <b>n</b> key on your keyboard.<br>There is a time limit for each situation, so you should answer as quickly and accurately as you can.<br><br> Press the SPACEBAR to continue.</p>',
+  stimulus: '<p class = "instructions"><b>Sentence Reading Task</b><br>In this task, you will read different situations involving two people. Each situation will end with a final sentence, where one of the characters says something. Your job is to determine whether the final sentence in each situation is <i>positive</i> or <i>negative</i>.<br><br>If you think the sentence is <i>positive</i>, press the <b>p</b> key on your keyboard.<br>If you think the sentence is <i>negative</i>, press the <b>n</b> key on your keyboard.<br>There is a time limit for each situation, so you should answer as quickly and accurately as you can.<br><br> Press the SPACEBAR to continue.</p>',
   choices: [" "]
 }
 
@@ -442,9 +442,10 @@ const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice
 timeline.push(
   ...introduction,
   ...demographic_timeline,
+  ...irony_timeline,
   ...ctest_timeline,
   ...lextale_timeline,
-  ...irony_timeline,
+  
 );
  
 jsPsych.run(timeline);

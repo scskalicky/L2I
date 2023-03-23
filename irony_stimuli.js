@@ -74,3 +74,5 @@ irony_stim_practice = [
       "situation": 'Mary has just had her hair cut short. Both Bill and Simon like Mary with long hair. Bill says to Simon:<br><br> "<i>Mary\'s new hair style looks just great</i>."', data:{stim_id: "20", valence: "negative",condition: "ironic",practice: "no"}
     }
   ]
+
+  
