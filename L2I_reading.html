@@ -436,7 +436,7 @@ choices: ['p', 'n']
 
 const introduction = [instructions_general, enter_fullscreen]
 
-const demographic_timeline = [instructions_demo, age, sex, education_level, country_background, language_background, english_outside_classroom, years_learning_english, english_activities, self_ratings_english]
+const demographic_timeline = [instructions_demo, name, age, sex, education_level, country_background, language_background, english_outside_classroom, years_learning_english, english_activities, self_ratings_english]
 const ctest_timeline = [instructions_ctest, CT_trials]
 const lextale_timeline = [lextale_preamble, instructions_lextale, pre_lextale, lextale]
 const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice_trials,instructions_irony_real, irony_trials]
@@ -444,13 +444,11 @@ const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice
 
 // use spread operator (...) to push the arrays
 timeline.push(
-  name,
- // ...introduction,
-  //...demographic_timeline,
-  //...irony_timeline,
- // ...ctest_timeline,
-  //...lextale_timeline,
-  
+ ...introduction,
+  ...demographic_timeline,
+  ...irony_timeline,
+ ...ctest_timeline,
+  ...lextale_timeline,
 );
  
 jsPsych.run(timeline);
