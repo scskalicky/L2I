@@ -12,7 +12,7 @@ function addMaster(name, email){
     $.ajax({
         url: 'add_subject_master.php',
         type: 'POST',
-        data: {subject: name, email: email},
+        data: {subject: name, email_add: email},
         dataType: 'text'})
 };
 
