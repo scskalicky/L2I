@@ -2,7 +2,7 @@
 // add subject to master csv when they complete the experiment
 $subject = $_POST['subject'];
 
-$email = $_POST['email_add'];
+$email = $_POST['email'];
 
 $line = array($subject, $email);
 
