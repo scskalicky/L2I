@@ -1,7 +1,5 @@
-<? php
-
+<?php
 // add subject to master csv when they complete the experiment
-// subject
 $subject = $_POST['subject'];
 
 $email = $_POST['email_add'];
