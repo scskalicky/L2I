@@ -1,4 +1,3 @@
 # L2_irony
  
-Need to be public to pull.
-
+Creating some online tasks to replicate a few studies on L2 irony processing and comprehension. 

@@ -17,6 +17,7 @@
   <script src="jspsych/plugin-preload.js"></script>
   <script src='lextale_stimuli.js'></script>
   <script src='irony_stimuli.js'></script>
+  <script src = 'helper_functions.js'></script>
   <link href = "jspsych/jspsych.css" rel="stylesheet" type = "text/css" />
 
   </head>
@@ -34,6 +35,7 @@
       //console.log(email2_url);
       var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
 		  jsPsych.data.addProperties({lextale_score: lextale_score});
+      addMaster(jsPsych.data.subject, jsPsych.data.email);
       jsPsych.data.displayData();
      // console.log('finished')
       // save data to csv
@@ -49,18 +51,6 @@
 // init timeline
 var timeline = [];
 
-const subject = {
-  type: jsPsychSurveyText,
-  questions: [
-    {prompt: "Subject Name", name: 'name', required: true}
-  ],
-  on_finish: function(data){
-   jsPsych.data.addProperties({
-    subject:  data.response.name.concat('_', performance.now())}),
-    console.log(data)
-  }
-};
-
 const instructions_general = {
   type: jsPsychHtmlButtonResponse,
     stimulus: '<p class = "instructions">Thank you for participating in this study! In this experiment, you will complete FOUR tasks: a demographic survey, a sentence reading activity, a text completion activity, and a word recognition activity. You should set aside at least 30 minutes to complete this experiment. This experiment should be completed in one go - you cannot save your data and return later.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue with this project.<br><br> Finally, please be sure to take this test on a computer in a quiet room. Please turn off all music, televisions, or other distractions, and please put your phone away during the experiment.</p><br>',
@@ -75,8 +65,6 @@ var enter_fullscreen = {
 };
 
 
-
-
 /*  
 #################
 DEMOGRAPHIC SURVEY
@@ -89,6 +77,26 @@ const instructions_demo = {
   stimulus: '<p class = "instructions">Before we start, please answer some questions about yourself and your language knowledge.<br><br>Please press "Continue".</p><br>',
   choices: ['Continue']
 }
+
+
+const name = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: 'What is your first name?', required: true, name: 'first_name'},
+    {prompt: 'What is your family name?', required: true, name: 'family_name'},
+    {prompt: 'What is your email?', required: true, name: 'email'}
+  ],
+    on_finish: function(data){
+      jsPsych.data.addProperties({first_name: data.response.first_name})
+      jsPsych.data.addProperties({family_name: data.response.family_name})
+      jsPsych.data.addProperties({email: data.response.email})
+      jsPsych.data.addProperties({subject:  data.response.first_name.concat('_', data.response.family_name, '_', performance.now())}),
+      console.log(data.subject)
+      console.log(data.response.email)
+      createData(jsPsych.data.subject, data.response.email)
+
+      }
+};
 
 const age = {
     type: jsPsychSurveyHtmlForm,
@@ -440,11 +448,12 @@ const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice
 
 // use spread operator (...) to push the arrays
 timeline.push(
-  ...introduction,
-  ...demographic_timeline,
-  ...irony_timeline,
-  ...ctest_timeline,
-  ...lextale_timeline,
+  name,
+ // ...introduction,
+  //...demographic_timeline,
+  //...irony_timeline,
+ // ...ctest_timeline,
+  //...lextale_timeline,
   
 );
  
