@@ -5,7 +5,7 @@ function createData(name){
         type: 'POST',
         data: {subject: name},
         dataType: 'text'})
-    }
+    };
 
 // add subject/email to master csv
 function addMaster(name, email){
@@ -14,7 +14,7 @@ function addMaster(name, email){
         type: 'POST',
         data: {subject: name, email: email},
         dataType: 'text'})
-}
+};
 
 
 // saves all jsPsych data to server at end of test as single csv file. 
@@ -24,4 +24,4 @@ function saveData(name, data){
         type: 'POST',
         data: {full_data: data, subject: name},
         dataType: 'text'})
-    }
+    };
