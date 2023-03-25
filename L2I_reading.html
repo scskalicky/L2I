@@ -32,7 +32,7 @@
       console.log(jsPsych.data.get().select('email').values[0]);
       var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
 		  jsPsych.data.addProperties({lextale_score: lextale_score});
-      addMaster(jsPsych.data.subject, jsPsych.data.email);
+      addMaster(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().select('email').values[0]);
       jsPsych.data.displayData();
      // console.log('finished')
       // save data to csv
