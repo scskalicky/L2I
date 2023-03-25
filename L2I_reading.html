@@ -27,17 +27,17 @@
     show_progress_bar: true,
     message_progress_bar: '<span style = "color:red";><b>DO NOT REFRESH YOUR BROWSER OR HIT BACK!<span></b>',
     on_finish: function(data){
-      const subject_url = jsPsych.data.get().select('subject').values[0];
-      //console.log(jsPsych.data.get().select('subject').values[0]);
-      //console.log(jsPsych.data.get().select('email').values[0]);
+      // calculate lextale and append to data.
       var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
 		  jsPsych.data.addProperties({lextale_score: lextale_score});
+
+      // add subject and email to master csv list.
       addMaster(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().select('email').values[0]);
-      jsPsych.data.displayData();
-     // console.log('finished')
-      // save data to csv
+      // save data to csv.
       saveData(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().csv());
-      //window.location = "https://vuw.qualtrics.com/jfe/form/SV_56BeZAD6eb5pS2W?sub=".concat(subject_url).concat('&email1=').concat(email1_url).concat('&email2=').concat(email2_url)
+
+      // forward to thank you message.
+      window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
     },
   });
   </script>
