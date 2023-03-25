@@ -48,6 +48,19 @@
 // init timeline
 var timeline = [];
 
+
+const broswer_check = {
+  type: jsPsychBrowserCheck,
+  inclusion_function: (data) => {
+    return data.mobile === false
+  },
+  exclusion_message: (data) => {
+    if(data.mobile){
+      return '<p>You must use a desktop/laptop computer to participate in this experiment.</p>';
+    }
+  }
+};
+
 const instructions_general = {
   type: jsPsychHtmlButtonResponse,
     stimulus: '<p class = "instructions">Thank you for participating in this study! In this experiment, you will complete FOUR tasks: a demographic survey, a sentence reading activity, a text completion activity, and a word recognition activity. You should set aside at least 30 minutes to complete this experiment. This experiment should be completed in one go - you cannot save your data and return later.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue with this project.<br><br> Finally, please be sure to take this test on a computer in a quiet room. Please turn off all music, televisions, or other distractions, and please put your phone away during the experiment.</p><br>',
@@ -444,6 +457,7 @@ const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice
 
 // use spread operator (...) to push the arrays
 timeline.push(
+  browser_check,
  ...introduction,
   ...demographic_timeline,
   ...irony_timeline,
