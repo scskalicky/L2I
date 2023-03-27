@@ -32,9 +32,7 @@
       var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
 		  jsPsych.data.addProperties({lextale_score: lextale_score});
 
-      // add subject and email to master csv list.
-     // addMaster(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().select('email').values[0]);
-      
+   
       // save data
       saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
 
@@ -457,14 +455,14 @@ const introduction = [instructions_general, enter_fullscreen]
 const demographic_timeline = [instructions_demo, 
 name, 
 age, 
-sex
-//education_level, 
-//country_background, 
-//language_background, 
-//english_outside_classroom, 
-//years_learning_english, 
-//english_activities, 
-//self_ratings_english
+sex,
+education_level, 
+country_background, 
+language_background, 
+english_outside_classroom, 
+years_learning_english, 
+english_activities, 
+self_ratings_english
 ]
 const ctest_timeline = [instructions_ctest, CT_trials]
 const lextale_timeline = [lextale_preamble, instructions_lextale, pre_lextale, lextale]
@@ -476,9 +474,9 @@ timeline.push(
   browser_check,
  ...introduction,
   ...demographic_timeline,
- // ...irony_timeline,
- //...ctest_timeline,
-  //...lextale_timeline,
+  ...irony_timeline,
+ ...ctest_timeline,
+  ...lextale_timeline,
 );
  
 jsPsych.run(timeline);
