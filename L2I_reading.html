@@ -34,7 +34,7 @@
 
    
       // save data
-      saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
+     // saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
 
       // forward to thank you message.
       window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
@@ -448,6 +448,23 @@ choices: ['p', 'n']
 }
 
 
+/*
+saveData functions because it seems to not work all the time? 
+
+
+*/
+
+const end_experiment = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p class = "instructions">You have completed the experiment, thank you. Please press Continue to end the experiment</p>',
+  on_start: function(){
+    // save data
+    saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
+  },
+  choices: ["Continue"]
+}
+
+
 // define the timeline order
 
 const introduction = [instructions_general, enter_fullscreen]
@@ -477,6 +494,7 @@ timeline.push(
   ...irony_timeline,
  ...ctest_timeline,
   ...lextale_timeline,
+  end_experiment
 );
  
 jsPsych.run(timeline);
