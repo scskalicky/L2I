@@ -34,8 +34,10 @@
 
       // add subject and email to master csv list.
       addMaster(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().select('email').values[0]);
+      
       // save data to csv.
       saveData(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().csv());
+      console.log(jsPsych.data.get().select('subject').values[0]);
 
       // forward to thank you message.
       window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
@@ -163,7 +165,7 @@ const language_background = {
   type: jsPsychSurveyText,
   questions: [
     {prompt: 'What is your native language? (If you grew up with more than one language, please specify)', required: true, name: 'native_language'},
-    {prompt: 'Do you speak a foreign language in addition to English?  Which language(s)?', required: false, name: 'other_foreign_langs'},
+    {prompt: 'Do you speak a foreign language in addition to English?  Which language(s)?', required: true, name: 'other_foreign_langs'},
   ],
     on_finish: function(data){
       jsPsych.data.addProperties({native_language: data.response.native_language})
@@ -318,7 +320,7 @@ const lextale_preamble = {
 		
 		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">If you are sure that the word exists, even though you don\'t know its exact meaning, you may still respond "yes". But if you are not sure if it is an existing word, you should respond "no".</br></br>',
 		
-		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">In this experiment, we use British English rather than American English spelling. For example: “realise" instead of "realize"; "colour" instead of "color", and so on. Please don\'t let this confuse you. This experiment is not about detecting such subtle spelling differences anyway.',
+		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">In this experiment, we use British English rather than American English spelling. For example: "realise" instead of "realize"; "colour" instead of "color", and so on. Please don\'t let this confuse you. This experiment is not about detecting such subtle spelling differences anyway.',
 
 		'<p class = "instructions"><b>WORD RECOGNITION TEST</b></p>' + '<p class = "instructions">You have as much time as you like for each decision. This part of the experiment will take about 5 minutes.</br>',
 		
@@ -439,7 +441,7 @@ on_start: function(trial){
 },
 stimulus: '',
 data: jsPsych.timelineVariable("data"),
-trial_duration: 18100,
+trial_duration: 18100, // timeout after 18 seconds + 100ms buffer
 choices: ['p', 'n']
 }
 
@@ -464,9 +466,9 @@ timeline.push(
   browser_check,
  ...introduction,
   ...demographic_timeline,
-  ...irony_timeline,
- ...ctest_timeline,
-  ...lextale_timeline,
+ // ...irony_timeline,
+ //...ctest_timeline,
+  //...lextale_timeline,
 );
  
 jsPsych.run(timeline);
