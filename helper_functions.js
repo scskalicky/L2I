@@ -18,10 +18,10 @@ function addMaster(name, email){
 
 
 // saves all jsPsych data to server at end of test as single csv file. 
-function saveData(name, data){
+function saveData(name, email, data){
     $.ajax({
         url: 'write_data.php',
         type: 'POST',
-        data: {full_data: data, subject: name},
+        data: {subject: name, email: email, full_data: data},
         dataType: 'text'})
     };

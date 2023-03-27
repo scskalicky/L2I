@@ -33,11 +33,10 @@
 		  jsPsych.data.addProperties({lextale_score: lextale_score});
 
       // add subject and email to master csv list.
-      addMaster(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().select('email').values[0]);
+     // addMaster(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().select('email').values[0]);
       
-      // save data to csv.
-      saveData(jsPsych.data.get().select('subject').values[0], jsPsych.data.get().csv());
-      console.log(jsPsych.data.get().select('subject').values[0]);
+      // save data
+      saveData(name = jsPsych.data.get().select('subject').values[0], email = jsPsych.data.get().select('email').values[0], data = jsPsych.data.get().csv());
 
       // forward to thank you message.
       window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
@@ -109,7 +108,7 @@ const name = {
       jsPsych.data.addProperties({subject:  data.response.first_name.concat('_', data.response.family_name, '_', performance.now())}),
       console.log(data.subject)
       console.log(data.email)
-      createData(data.subject, data.email)
+     // createData(data.subject, data.email)
       }
 };
 
@@ -455,7 +454,18 @@ choices: ['p', 'n']
 
 const introduction = [instructions_general, enter_fullscreen]
 
-const demographic_timeline = [instructions_demo, name, age, sex, education_level, country_background, language_background, english_outside_classroom, years_learning_english, english_activities, self_ratings_english]
+const demographic_timeline = [instructions_demo, 
+name, 
+age, 
+sex
+//education_level, 
+//country_background, 
+//language_background, 
+//english_outside_classroom, 
+//years_learning_english, 
+//english_activities, 
+//self_ratings_english
+]
 const ctest_timeline = [instructions_ctest, CT_trials]
 const lextale_timeline = [lextale_preamble, instructions_lextale, pre_lextale, lextale]
 const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice_trials,instructions_irony_real, irony_trials]
@@ -466,7 +476,7 @@ timeline.push(
   browser_check,
  ...introduction,
   ...demographic_timeline,
-  ...irony_timeline,
+ // ...irony_timeline,
  //...ctest_timeline,
   //...lextale_timeline,
 );
