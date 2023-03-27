@@ -371,7 +371,7 @@ var jsPsychBrowserCheck = (function (jspsych) {
                 }
                 else {
                   //  this.end_experiment(feature_data);
-                  window.location = 'https://figuratively-speaking.com/l2i/L2I/nmobile_warning.html'
+                  window.location = 'https://figuratively-speaking.com/l2i/L2I/mobilewarning.html'
                 }
             });
         }
