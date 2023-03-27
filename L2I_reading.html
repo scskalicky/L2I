@@ -67,7 +67,7 @@ const browser_check = {
 
 const instructions_general = {
   type: jsPsychHtmlButtonResponse,
-    stimulus: '<p class = "instructions">Thank you for participating in this study! In this experiment, you will complete FOUR tasks: a demographic survey, a sentence reading activity, a text completion activity, and a word recognition activity. You should set aside at least 30 minutes to complete this experiment. This experiment should be completed in one go - you cannot save your data and return later.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue with this project.<br><br> Finally, please be sure to take this test on a computer in a quiet room. Please turn off all music, televisions, or other distractions, and please put your phone away during the experiment.</p><br>',
+    stimulus: '<p class = "instructions">Thank you for participating in this study!</p><p class = "instructions" style = "font-size: 30px; color: red"><b>STOP!</b></p><p class = "instructions">You should set aside at least thirty minutes to complete this task. This experiment should be completed in one go - you cannot save your data and return later. In this experiment, you will complete FOUR tasks: a demographic survey, a sentence reading activity, a text completion activity, and a word recognition activity.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue.<br><br>Finally, please be sure to take this test on a computer in a quiet room. Do not use a mobile device such as a phone or tablet — the task will not allow you to proceed unless you are using a laptop or desktop computer.</p><br>',
     choices: ['I Understand']
 }
 
@@ -75,7 +75,7 @@ const instructions_general = {
 var enter_fullscreen = {
   type: jsPsychFullscreen,
   fullscreen_mode: true,
-  message: '<p class = "instructions">Your browser will now switch to full screen mode. Please leave your browser in full screen for the duration of the test.</p><br>'
+  message: '<p class = "instructions" style = "font-size: 30px; color: red"><b>ATTENTION PLEASE!</b></p><p class = "instructions">We ask that you provide your fullest attention during the experiment. Please turn off your phone as well as any music, television, or other potential distractions around you. <br><br> Your browser will now switch to full screen mode. Please leave your browser in full screen for the duration of the test.</p><br>'
 };
 
 

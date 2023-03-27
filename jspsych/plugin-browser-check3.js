@@ -371,6 +371,7 @@ var jsPsychBrowserCheck = (function (jspsych) {
                 }
                 else {
                   //  this.end_experiment(feature_data);
+                  // I wanted to direct the window somewhere else instead of ending the experiment.
                   window.location = 'https://figuratively-speaking.com/l2i/L2I/mobilewarning.html'
                 }
             });
