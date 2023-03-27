@@ -370,7 +370,8 @@ var jsPsychBrowserCheck = (function (jspsych) {
                     this.end_trial(feature_data);
                 }
                 else {
-                    this.end_experiment(feature_data);
+                  //  this.end_experiment(feature_data);
+                  window.location = 'https://figuratively-speaking.com/l2i/L2I/nmobile_warning.html'
                 }
             });
         }

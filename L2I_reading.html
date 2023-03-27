@@ -52,13 +52,15 @@ var timeline = [];
 
 const browser_check = {
   type: jsPsychBrowserCheck,
+  // returns whether the mobile is equal to false
   inclusion_function: (data) => {
     return data.mobile === false
   },
+  // if it is TRUE...end experiment (how to make this do other stuff? )
   exclusion_message: (data) => {
     if(data.mobile){
-      window.location = 'https://figuratively-speaking.com/l2i/L2I/nmobile_warning.html'
-    //  return '<p>You must use a desktop/laptop computer to participate in this experiment.</p>';
+      window.location = 'https://figuratively-speaking.com/l2i/L2I/nmobile_warning.html';
+    // return '<p>You must use a desktop/laptop computer to participate in this experiment.</p>';
     }
   }
 };
