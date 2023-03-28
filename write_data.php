@@ -11,16 +11,16 @@ $subject = $_POST['subject'];
 $email = $_POST['email'];
 
 // combine subject and email into one line
-$line = array($subject, $email);
+$line = array(htmlspecialchars($subject), htmlspecialchars($email));
 
 // create filename (folder should already be created)
 //$name = "data/" . $subject . "/" . $subject . "_results.csv"; 
 
 // don't create a separat folder for each person 
-$name = "data/" . $subject . "_results.csv"; 
+$name = "data/" . htmlspecialchars($subject) . "_results.csv"; 
 
 // write the file to disk
-file_put_contents($name, $data);
+file_put_contents($name, htmlspecialchars($data));
 
 
 // open master csv file
