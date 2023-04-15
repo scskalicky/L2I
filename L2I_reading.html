@@ -537,16 +537,15 @@ self_ratings_english
 const ctest_timeline = [instructions_ctest, CT_trials]
 const lextale_timeline = [lextale_preamble, instructions_lextale, pre_lextale, lextale]
 const irony_timeline = [
-  //instructions_irony_practice, 
-  //ready_hands, 
-  //irony_practice_trials,
+  instructions_irony_practice, 
+  ready_hands, 
+  irony_practice_trials,
   instructions_irony_real, 
   irony_trials]
 
 
 // use spread operator (...) to push the arrays
 timeline.push(
-  handedness, ...irony_timeline,
   browser_check,
  ...introduction,
   ...demographic_timeline,
