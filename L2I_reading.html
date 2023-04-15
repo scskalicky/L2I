@@ -48,6 +48,11 @@
 // init timeline
 var timeline = [];
 
+// placeholder for handedness variable 
+var handy = null
+var neg_button = 'q'
+var pos_button = 'p'
+
 
 const browser_check = {
   type: jsPsychBrowserCheck,
@@ -56,6 +61,7 @@ const browser_check = {
     return data.mobile === false
   },
   // if it is TRUE...end experiment (how to make this do other stuff? )
+  // I think I had to edit the plugin to force this redirect. 
   exclusion_message: (data) => {
     if(data.mobile){
       window.location = 'https://figuratively-speaking.com/l2i/L2I/nmobile_warning.html';
@@ -76,6 +82,8 @@ var enter_fullscreen = {
   fullscreen_mode: true,
   message: '<p class = "instructions" style = "font-size: 30px; color: red"><b>ATTENTION PLEASE!</b></p><p class = "instructions">We ask that you provide your fullest attention during the experiment. Please turn off your phone as well as any music, television, or other potential distractions around you. <br><br> Your browser will now switch to full screen mode. Please leave your browser in full screen for the duration of the test.</p><br>'
 };
+
+
 
 
 /*  
@@ -132,6 +140,22 @@ const sex = {
         data.trial_item = 'sex_question';
     }
     };
+
+const handedness = {
+  type: jsPsychSurveyMultiChoice,
+  questions: [{prompt: "Are you left-handed or right-handed?<br>", 
+  options: ['Left-Handed', 'Right-Handed'], required: true}],
+  on_finish: function(data){
+    jsPsych.data.addProperties({handedness: data.response})
+    data.trial_item = 'handedness_question';
+    handy = data.response.Q0;
+    // change the buttons if they are left-handed.
+    if(handy == 'Left-Handed'){
+      neg_button = 'p';
+      pos_button = 'q';      
+    };
+  }
+};
 
 const education_level = {
 type: jsPsychSurveyMultiChoice,
@@ -376,19 +400,21 @@ IRONY RECOGNITION TASK
 
 const instructions_irony_practice = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p class = "instructions"><b>Sentence Reading Task</b><br>In this task, you will read different situations involving two people. Each situation will end with a final sentence, where one of the characters says something. Your job is to determine whether the final sentence in each situation is <i>positive</i> or <i>negative</i>.<br><br>If you think the sentence is <i>positive</i>, press the <b>p</b> key on your keyboard.<br>If you think the sentence is <i>negative</i>, press the <b>n</b> key on your keyboard.<br>There is a time limit for each situation, so you should answer as quickly and accurately as you can.<br><br> Press the SPACEBAR to continue.</p>',
-  choices: [" "]
+  stimulus: '',
+  choices: [" "],
+  on_start: function(trial){
+    trial.stimulus = '<p class = "instructions"><b>Sentence Reading Task</b><br>In this task, you will read different situations involving two people. Each situation will end with a final sentence, where one of the characters says something. Your job is to determine whether the final sentence in each situation is <i>positive</i> or <i>negative</i>.<br><br>If you think the sentence is <i>positive</i>, press the <b>'.concat(pos_button).concat('</b> key on your keyboard.<br>If you think the sentence is <i>negative</i>, press the <b>').concat(neg_button).concat('</b> key on your keyboard.<br>There is a time limit for each situation, so you should answer as quickly and accurately as you can.<br><br> Press the SPACEBAR to continue.</p>')
+  }
 }
-
 
 const ready_hands = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p class = "instructions">Remember, you will press either the "p" or the "n" key to make your answer.<br><br> Please please one hand ready to push the "p" key and one hand ready to push the "n" key now. When you are ready, press the SPACEBAR to practice on two situations.</p>',
+  stimulus: '<p class = "instructions">Remember, you will press either the "p" or the "q" key to make your answer.<br><br> Please have one hand ready to push the "p" key and one hand ready to push the "q" key now. When you are ready, press the SPACEBAR to practice on two situations.</p>',
   choices: [" "]
 }
 
-
-const irony_prompt = "<br><br>p = positive / n = negative"
+const irony_prompt_right = "<br><br>p = positive / q = negative"
+const irony_prompt_left = "<br><br>q = positive /  p = negative"
 
 const irony_practice_trials = {
   timeline: [
@@ -400,14 +426,20 @@ const irony_practice_trials = {
 
   {
 type: jsPsychHtmlKeyboardResponse,
-prompt: irony_prompt,
+prompt: '',
 on_start: function(trial){
-  trial.stimulus = '<p style = "font-size:20px; text-align:center; border:dotted; width:500px;margin:auto">'.concat( jsPsych.timelineVariable('situation'))
+  trial.stimulus = '<p style = "font-size:20px; text-align:center; border:dotted; width:500px;margin:auto">'.concat( jsPsych.timelineVariable('situation'));
+  if(handy == 'Left-Handed'){
+    trial.prompt = irony_prompt_left
+  } else {
+    trial.prompt = irony_prompt_right
+  }
 },
 stimulus: '',
 data: jsPsych.timelineVariable("data"),
 trial_duration: 18100,
-choices: ['p', 'n']
+choices: ['p', 'q'],
+
 }
 
 
@@ -432,17 +464,36 @@ const irony_trials = {
 
   {
 type: jsPsychHtmlKeyboardResponse,
-prompt: irony_prompt,
+prompt: '',
 on_start: function(trial){
-  trial.stimulus = '<p style = "font-size:20px; text-align:center; border:dotted; width:500px;margin:auto">'.concat( jsPsych.timelineVariable('situation'))
+  trial.stimulus = '<p style = "font-size:20px; text-align:center; border:dotted; width:500px;margin:auto">'.concat( jsPsych.timelineVariable('situation'));
+  if(handy == 'Left-Handed'){
+  trial.prompt = irony_prompt_left
+  } else {
+  trial.prompt = irony_prompt_right
+  }
 },
 stimulus: '',
 data: jsPsych.timelineVariable("data"),
 trial_duration: 18100, // timeout after 18 seconds + 100ms buffer
-choices: ['p', 'n']
+choices: ['p', 'q'],
+
+// code cresp into the data
+on_finish: function(data){
+  console.log(data.response)
+  
+  if(data.valence == 'positive' && data.response == pos_button){
+    data.acc = 1
+  } 
+  else if(data.valence == 'negative' && data.response == neg_button){
+    data.acc = 1
+  }
+  else {
+    data.acc = 0
+  }
+  console.log(data)
 }
-
-
+}
   ], timeline_variables: irony_stim, randomize_order: true
 
 }
@@ -469,9 +520,11 @@ const end_experiment = {
 
 const introduction = [instructions_general, enter_fullscreen]
 
-const demographic_timeline = [instructions_demo, 
+const demographic_timeline = [
+instructions_demo, 
 name, 
 age, 
+handedness,
 sex,
 education_level, 
 country_background, 
@@ -483,11 +536,17 @@ self_ratings_english
 ]
 const ctest_timeline = [instructions_ctest, CT_trials]
 const lextale_timeline = [lextale_preamble, instructions_lextale, pre_lextale, lextale]
-const irony_timeline = [instructions_irony_practice, ready_hands, irony_practice_trials,instructions_irony_real, irony_trials]
+const irony_timeline = [
+  //instructions_irony_practice, 
+  //ready_hands, 
+  //irony_practice_trials,
+  instructions_irony_real, 
+  irony_trials]
 
 
 // use spread operator (...) to push the arrays
 timeline.push(
+  handedness, ...irony_timeline,
   browser_check,
  ...introduction,
   ...demographic_timeline,

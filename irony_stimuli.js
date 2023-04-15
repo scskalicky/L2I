@@ -6,7 +6,7 @@ irony_stim_practice = [
       "situation": 'Maggie is looking very smart in her new formal suit.<br>When her friend Simon sees her he says:<br><br><i>"You\'re a fashion queen, Maggie.</i>"', data: {valence: "positive", condition: "literal", practice: "yes"}
     },
     {
-      "situation": 'Peter has been trying to date Jenefer.<br>Jenefer has politely refused all his invitations but Peter carries on asking for a date. Jenefer says:<br><br>"<i>You never give up, do you</i>?"', data: {valence: "negative",condition: "literal",practice: "yes"}
+      "situation": 'Peter has been trying to date Jenefer.<br>Jenefer has politely refused all his invitations but Peter carries on asking for a date. Jenefer says:<br><br>"<i>You never give up, do you</i>?"', data: {valence: "negative", condition: "literal",practice: "yes"}
     }]
 
 
