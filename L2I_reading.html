@@ -37,7 +37,9 @@
      // saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
 
       // forward to thank you message.
-      window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
+     // window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
+     // for prolific
+     window.location = 'https://app.prolific.co/submissions/complete?cc=CPO631PP'
     },
   });
   </script>
@@ -159,7 +161,7 @@ const handedness = {
 
 const education_level = {
 type: jsPsychSurveyMultiChoice,
-questions: [{prompt: "Current level of education<br>",
+questions: [{prompt: "Current level of education<br>(please choose third year)",
 options: ['First Year University', 'Second Year University', 'Third Year University', 'Fourth Year University', 'Postgraduate University'], required: true}],
 on_finish: function(data){
     jsPsych.data.addProperties({education_level: data.response})
