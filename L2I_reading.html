@@ -50,9 +50,9 @@
 var timeline = [];
 
 // placeholder for handedness variable 
-var handy = null
-var neg_button = 'q'
-var pos_button = 'p'
+var handy = null;
+var neg_button = 'Q';
+var pos_button = 'P';
 
 
 const browser_check = {
@@ -152,8 +152,8 @@ const handedness = {
     handy = data.response.Q0;
     // change the buttons if they are left-handed.
     if(handy == 'Left-Handed'){
-      neg_button = 'p';
-      pos_button = 'q';      
+      neg_button = 'P';
+      pos_button = 'Q';      
     };
   }
 };
@@ -224,7 +224,7 @@ const english_outside_classroom = {
 const english_activities = {
   type: jsPsychSurveyText,
   questions: [
-    {prompt: 'What kinds of activities did you do to learn English outside the classroom?<br> (e.g. reading books; watching English movies; practice speaking; interacting with parents or friends in English).', required: true, rows: 2, name: 'english_activities'},
+    {prompt: 'What kinds of activities did you do to learn English outside the classroom?<br> (e.g. reading books; watching English movies; practice speaking; interacting with parents or friends in English).', required: true, rows: 10, name: 'english_activities'},
   ],
     on_finish: function(data){
       jsPsych.data.addProperties({english_activities: data.response.english_activities})
@@ -410,12 +410,12 @@ const instructions_irony_practice = {
 
 const ready_hands = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p class = "instructions">Remember, you will press either the "p" or the "q" key to make your answer.<br><br> Please have one hand ready to push the "p" key and one hand ready to push the "q" key now. When you are ready, press the SPACEBAR to practice on two situations.</p>',
+  stimulus: '<p class = "instructions">Remember, you will press either the "P" or the "Q" key to make your answer.<br><br> Please have one hand ready to push the "P" key and one hand ready to push the "Q" key now. When you are ready, press the SPACEBAR to practice on two situations.</p>',
   choices: [" "]
 }
 
-const irony_prompt_right = "<br><br>p = positive / q = negative"
-const irony_prompt_left = "<br><br>q = positive /  p = negative"
+const irony_prompt_right = "<br><br>Q = negative / P = positive"
+const irony_prompt_left = "<br><br>Q = positive / P = negative"
 
 const irony_practice_trials = {
   timeline: [
