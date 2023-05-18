@@ -160,7 +160,7 @@ const handedness = {
 
 const education_level = {
 type: jsPsychSurveyMultiChoice,
-questions: [{prompt: "Current level of education<br>(please choose third year)",
+questions: [{prompt: "Current level of education<br>",
 options: ['First Year University', 'Second Year University', 'Third Year University', 'Fourth Year University', 'Postgraduate University'], required: true}],
 on_finish: function(data){
     jsPsych.data.addProperties({education_level: data.response})
