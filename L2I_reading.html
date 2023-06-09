@@ -18,6 +18,7 @@
   <script src="jspsych/plugin-preload.js"></script>
   <script src='lextale_stimuli.js'></script>
   <script src='irony_stimuli.js'></script>
+  <script src = 'info_sheet.js'></script>
   <script src = 'helper_functions1.js'></script>
   <link href = "jspsych/jspsych.css" rel="stylesheet" type = "text/css" />
 
@@ -53,6 +54,28 @@ var timeline = [];
 var handy = null;
 var neg_button = 'Q';
 var pos_button = 'P';
+
+
+const information_sheet = {
+		type: jsPsychHtmlButtonResponse,
+		stimulus: info_sheet,
+		prompt: '<br><br>',
+		choices: ['Continue'],
+		required: true,
+		on_finish: function(data){
+			data.trial_item = 'info_sheet';}
+	};
+
+	const consent = {
+		type: jsPsychHtmlButtonResponse,
+		stimulus: consent_sheet,
+		choices: ["I AGREE"],
+		prompt: '<br><br>',
+		required: true,
+		on_finish: function(data){
+			data.trial_item = 'consent';}
+	};
+
 
 
 const browser_check = {
@@ -522,6 +545,7 @@ const end_experiment = {
 const introduction = [instructions_general, enter_fullscreen]
 
 const demographic_timeline = [
+
 instructions_demo, 
 name, 
 age, 
@@ -547,6 +571,8 @@ const irony_timeline = [
 
 // use spread operator (...) to push the arrays
 timeline.push(
+  information_sheet,
+  consent,
   browser_check,
  ...introduction,
   ...demographic_timeline,
