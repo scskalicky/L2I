@@ -53,10 +53,7 @@
 // init timeline
 var timeline = [];
 
-// placeholder for handedness variable 
-var handy = null;
-var neg_button = 'Q';
-var pos_button = 'P';
+
 
 
 const information_sheet = {
@@ -170,6 +167,12 @@ const sex = {
         data.trial_item = 'sex_question';
     }
     };
+
+
+// placeholder for handedness variable 
+var handy = null;
+var neg_button = 'Q';
+var pos_button = 'P';
 
 const handedness = {
   type: jsPsychSurveyMultiChoice,
@@ -512,10 +515,10 @@ choices: ['p', 'q'],
 on_finish: function(data){
   console.log(data.response)
   
-  if(data.valence == 'positive' && data.response == pos_button){
+  if(data.valence == 'positive' && data.response == pos_button.toLowerCase()){
     data.acc = 1
   } 
-  else if(data.valence == 'negative' && data.response == neg_button){
+  else if(data.valence == 'negative' && data.response == neg_button.toLowerCase()){
     data.acc = 1
   }
   else {
