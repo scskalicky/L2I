@@ -8,7 +8,6 @@ irony_stim_practice = [
     {
       "situation": 'Peter has been trying to date Jenefer.<br>Jenefer has politely refused all his invitations but Peter carries on asking for a date. Jenefer says:<br><br>"<i>You never give up, do you</i>?"', data: {valence: "negative", condition: "literal",practice: "yes"}
     }]
-
    irony_stim = [ 
     {
       "situation": 'Tom has just got his end of year salary bonus. It was a lot more than he expected. He says to his boss:<br><br> "<i>Well, I can go ahead and buy that new car now</i>."',data:{stim_id: "01", valence: "positive",condition: "literal",practice: "no"}
