@@ -47,6 +47,11 @@
 
 <script>
 
+  // TODO 
+  // - test save buffer
+  // - get Qualtrics workflow going, need URL variables. 
+
+
 // init timeline
 var timeline = [];
 
@@ -73,10 +78,19 @@ const information_sheet = {
 		prompt: '<br><br>',
 		required: true,
 		on_finish: function(data){
-			data.trial_item = 'consent';}
+			data.trial_item = 'consent';
+      jsPsych.data.addProperties({first_name: jsPsych.data.getURLVariable('fn')})
+      jsPsych.data.addProperties({family_name: jsPsych.data.getURLVariable('sn')})
+      jsPsych.data.addProperties({email: jsPsych.data.getURLVariable('em')})
+      jsPsych.data.addProperties({subject:  jsPsych.data.getURLVariable('fn').concat('_', jsPsych.data.getURLVariable('sn'), '_', performance.now())}),
+      console.log(data.subject)
+      console.log(data.email)
+     // createData(data.subject, data.email)
+    
+    }
 	};
 
-
+  //https://figuratively-speaking.com/l2i/L2I/L2I_reading.html?fn= ${e://Field/fn}&sn=${e://Field/sn}&em=${e://Field/em}
 
 const browser_check = {
   type: jsPsychBrowserCheck,
@@ -84,8 +98,7 @@ const browser_check = {
   inclusion_function: (data) => {
     return data.mobile === false
   },
-  // if it is TRUE...end experiment (how to make this do other stuff? )
-  // I think I had to edit the plugin to force this redirect. 
+  // I think I had to edit the plugin to force this redirect. I don't think this one here does anything. 
   exclusion_message: (data) => {
     if(data.mobile){
       window.location = 'https://figuratively-speaking.com/l2i/L2I/nmobile_warning.html';
@@ -100,7 +113,6 @@ const instructions_general = {
     choices: ['I Understand']
 }
 
-
 var enter_fullscreen = {
   type: jsPsychFullscreen,
   fullscreen_mode: true,
@@ -108,14 +120,11 @@ var enter_fullscreen = {
 };
 
 
-
-
 /*  
 #################
 DEMOGRAPHIC SURVEY
 #################
 */
-
 
 const instructions_demo = {
   type: jsPsychHtmlButtonResponse,
@@ -523,6 +532,20 @@ on_finish: function(data){
 }
 
 
+// if participant clicks the CONTINUE button too quickly on the end experiment screen, then data is not saved (not enough time to write to server). This forces a five second wait. 
+const save_buffer = {
+  type: jsPsychHtmlKeyboardResponse,
+  on_start: function(){
+    // save data
+    console.log(jsPsych.data.get().select('subject').values[0])
+    //jsPsych.data.get().select('email').values[0]
+    saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
+  },
+  stimulus: "Please wait a moment...",
+  trial_duration: 5000,
+  choices: ['']
+}
+
 /*
 saveData functions because it seems to not work all the time? 
 
@@ -531,11 +554,7 @@ saveData functions because it seems to not work all the time?
 
 const end_experiment = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<p class = "instructions">You have completed the experiment, thank you. Please press Continue to end the experiment</p>',
-  on_start: function(){
-    // save data
-    saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
-  },
+  stimulus: '<p class = "instructions">You have completed the experiment, thank you.<br><br>Please press Continue to end the experiment.</p>',
   choices: ["Continue"]
 }
 
@@ -571,14 +590,15 @@ const irony_timeline = [
 
 // use spread operator (...) to push the arrays
 timeline.push(
+  browser_check,  
   information_sheet,
   consent,
-  browser_check,
  ...introduction,
   ...demographic_timeline,
   ...irony_timeline,
  ...ctest_timeline,
   ...lextale_timeline,
+  save_buffer,
   end_experiment
 );
  
