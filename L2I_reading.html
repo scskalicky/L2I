@@ -514,15 +514,19 @@ choices: ['p', 'q'],
 // code cresp into the data
 on_finish: function(data){
   console.log(data.response)
+
+  if(data.response == null){
+    data.response = 'timeout';
+  }
   
   if(data.valence == 'positive' && data.response == pos_button.toLowerCase()){
-    data.acc = 1
+    data.acc = 1;
   } 
   else if(data.valence == 'negative' && data.response == neg_button.toLowerCase()){
-    data.acc = 1
+    data.acc = 1;
   }
   else {
-    data.acc = 0
+    data.acc = 0;
   }
   console.log(data)
 }
