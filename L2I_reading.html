@@ -32,13 +32,11 @@
       // calculate lextale and append to data.
       var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
 		  jsPsych.data.addProperties({lextale_score: lextale_score});
-
-   
       // save data
      // saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
-
-      // forward to thank you message.
-      window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
+      // forward to qualtrics ending survey. 
+      window.location = "https://vuw.qualtrics.com/jfe/form/SV_0kxysb20fYGMgYu?subject=" + data.subject + '&subject_email=' + data.email
+    //  window.location = 'https://figuratively-speaking.com/l2i/L2I/thankyou.html'
      // for prolific
     },
   });
@@ -131,7 +129,6 @@ const instructions_demo = {
   stimulus: '<p class = "instructions">Before we start, please answer some questions about yourself and your language knowledge.<br><br>Please press "Continue".</p><br>',
   choices: ['Continue']
 }
-
 
 const name = {
   type: jsPsychSurveyText,
