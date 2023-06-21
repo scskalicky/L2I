@@ -17,7 +17,7 @@
   <script src = "jspsych/plugin-cloze19.js"></script>
   <script src="jspsych/plugin-preload.js"></script>
   <script src='lextale_stimuli.js'></script>
-  <script src='irony_stimuli.js'></script>
+  <script src='irony_stim.js'></script>
   <script src = 'info_sheet.js'></script>
   <script src = 'helper_functions1.js'></script>
   <link href = "jspsych/jspsych.css" rel="stylesheet" type = "text/css" />
@@ -45,9 +45,30 @@
 
 <script>
 
+  //todo
+  // randomly choose each list, save list data to variables, take from TF/EDT data. 
+
 // init timeline
 var timeline = [];
 
+// pick the stimuli lists. 
+var irony_stim = []
+
+var coin = Math.random(1); 
+
+if(coin <=.5){
+  var irony_stim = irony_stim_B;
+  console.log('coin toss lost, switching to b')
+  jsPsych.data.addProperties({stim_list: 'B'})
+
+  } else {
+    var irony_stim = irony_stim_A;
+    jsPsych.data.addProperties({stim_list: 'A'})
+  };
+
+  console.log(jsPsych.data.get())
+
+ 
 const information_sheet = {
 		type: jsPsychHtmlButtonResponse,
 		stimulus: info_sheet,
@@ -64,17 +85,17 @@ const information_sheet = {
 		choices: ["I AGREE"],
 		prompt: '<br><br>',
 		required: true,
-		on_finish: function(data){
-			data.trial_item = 'consent';
-      jsPsych.data.addProperties({first_name: jsPsych.data.getURLVariable('fn')})
-      jsPsych.data.addProperties({family_name: jsPsych.data.getURLVariable('sn')})
-      jsPsych.data.addProperties({email: jsPsych.data.getURLVariable('em')})
-      jsPsych.data.addProperties({subject:  jsPsych.data.getURLVariable('fn').concat('_', jsPsych.data.getURLVariable('sn'), '_', performance.now())}),
-      console.log(data.subject)
-      console.log(data.email)
-     // createData(data.subject, data.email)
+		// on_finish: function(data){
+		// 	data.trial_item = 'consent';
+    //   jsPsych.data.addProperties({first_name: jsPsych.data.getURLVariable('fn')})
+    //   jsPsych.data.addProperties({family_name: jsPsych.data.getURLVariable('sn')})
+    //   jsPsych.data.addProperties({email: jsPsych.data.getURLVariable('em')})
+    //   jsPsych.data.addProperties({subject:  jsPsych.data.getURLVariable('fn').concat('_', jsPsych.data.getURLVariable('sn'), '_', performance.now())}),
+    //   console.log(data.subject)
+    //   console.log(data.email)
+    //  // createData(data.subject, data.email)
     
-    }
+    // }
 	};
 
   //https://figuratively-speaking.com/l2i/L2I/L2I_reading.html?fn= ${e://Field/fn}&sn=${e://Field/sn}&em=${e://Field/em}
@@ -94,7 +115,11 @@ const browser_check = {
   }
 };
 
+
+
+
 const instructions_general = {
+
   type: jsPsychHtmlButtonResponse,
     stimulus: '<p class = "instructions">Thank you for participating in this study!</p><p class = "instructions" style = "font-size: 30px; color: red"><b>STOP!</b></p><p class = "instructions">You should set aside at least thirty minutes to complete this experiment. This experiment should be completed in one go - you cannot save your data and return later. In this experiment, you will complete FOUR tasks: a demographic survey, a text completion activity, a word recognition activity, and a sentence reading activity.<br><br>During the test, please <b><span style = "color:red;">do not</b><span> refresh your browser or use the back button. Doing so will result in a loss of all your data, and you will be unable to continue.<br><br>Finally, please be sure to take this test on a computer in a quiet room. Do not use a mobile device such as a phone or tablet -- the task will not allow you to proceed unless you are using a laptop or desktop computer.</p><br>',
     choices: ['I Understand']
