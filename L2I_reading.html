@@ -85,17 +85,17 @@ const information_sheet = {
 		choices: ["I AGREE"],
 		prompt: '<br><br>',
 		required: true,
-		// on_finish: function(data){
-		// 	data.trial_item = 'consent';
-    //   jsPsych.data.addProperties({first_name: jsPsych.data.getURLVariable('fn')})
-    //   jsPsych.data.addProperties({family_name: jsPsych.data.getURLVariable('sn')})
-    //   jsPsych.data.addProperties({email: jsPsych.data.getURLVariable('em')})
-    //   jsPsych.data.addProperties({subject:  jsPsych.data.getURLVariable('fn').concat('_', jsPsych.data.getURLVariable('sn'), '_', performance.now())}),
-    //   console.log(data.subject)
-    //   console.log(data.email)
-    //  // createData(data.subject, data.email)
+		on_finish: function(data){
+			data.trial_item = 'consent';
+      jsPsych.data.addProperties({first_name: jsPsych.data.getURLVariable('fn')})
+      jsPsych.data.addProperties({family_name: jsPsych.data.getURLVariable('sn')})
+      jsPsych.data.addProperties({email: jsPsych.data.getURLVariable('em')})
+      jsPsych.data.addProperties({subject:  jsPsych.data.getURLVariable('fn').concat('_', jsPsych.data.getURLVariable('sn'), '_', performance.now())}),
+      console.log(data.subject)
+      console.log(data.email)
+     // createData(data.subject, data.email)
     
-    // }
+    }
 	};
 
   //https://figuratively-speaking.com/l2i/L2I/L2I_reading.html?fn= ${e://Field/fn}&sn=${e://Field/sn}&em=${e://Field/em}
