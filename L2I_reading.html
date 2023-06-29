@@ -30,8 +30,7 @@
     message_progress_bar: '<span style = "color:red";><b>DO NOT REFRESH YOUR BROWSER OR HIT BACK!<span></b>',
     on_finish: function(data){
       // calculate lextale and append to data.
-      var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
-		  jsPsych.data.addProperties({lextale_score: lextale_score});
+      
       // save data
      // saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
       // forward to qualtrics ending survey. 
@@ -576,7 +575,11 @@ saveData functions because it seems to not work all the time?
 const end_experiment = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<p class = "instructions">You have completed the experiment, thank you.<br><br>Please press Continue to end the experiment.</p>',
-  choices: ["Continue"]
+  choices: ["Continue"],
+  on_finish: function(data){
+    var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
+		jsPsych.data.addProperties({lextale_score: lextale_score});
+  }
 }
 
 
