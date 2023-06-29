@@ -436,7 +436,11 @@ const lextale_preamble = {
 		}}
 		},
 		],
-		timeline_variables: lextale_words
+		timeline_variables: lextale_words,
+    on_timeline_finish: function(data){
+    var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
+		jsPsych.data.addProperties({lextale_score: lextale_score});
+  }
 	}; 
 
 
@@ -575,11 +579,7 @@ saveData functions because it seems to not work all the time?
 const end_experiment = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<p class = "instructions">You have completed the experiment, thank you.<br><br>Please press Continue to end the experiment.</p>',
-  choices: ["Continue"],
-  on_finish: function(data){
-    var lextale_score = ((rw_score / 40*100) + (nw_score / 20 * 100))  / 2;
-		jsPsych.data.addProperties({lextale_score: lextale_score});
-  }
+  choices: ["Continue"]
 }
 
 
