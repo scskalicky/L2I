@@ -141,6 +141,16 @@
   font-family: 'Open Sans', 'Arial', sans-serif;
 }
 
+/*Control size of Cloze text boxes*/
+.cloze input[type=text]{
+  size: 1;
+}
+
+.cloze {
+  text-align:justify;
+  width: 750px;
+}
+
 .instructions {
   font-size: 18px;
   font-family: 'Open Sans', 'Arial', sans-serif;
