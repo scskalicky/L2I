@@ -17,14 +17,13 @@ $line = array($subject, $email);
 //$name = "data/" . $subject . "/" . $subject . "_results.csv"; 
 
 // don't create a separat folder for each person 
-$name = "data/" . $subject . "_results.csv"; 
+$name = "ital_data/" . $subject . "_results.csv"; 
 
 // write the file to disk
 file_put_contents($name, $data);
 
-
 // open master csv file
-$handle = fopen("data/completions.csv", "a");
+$handle = fopen("ital_data/completions.csv", "a");
 
 // append new row containing subject name and email
 fputcsv($handle, $line); # $line is an array of strings (array|string[])
