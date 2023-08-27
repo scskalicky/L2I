@@ -30,7 +30,7 @@ function saveData(name, email, data){
 // saves all jsPsych data to server at end of test as single csv file. 
 function saveDataNES(name, data){
     $.ajax({
-        url: 'write_data.php',
+        url: 'write_data_nes.php',
         type: 'POST',
         data: {subject: name, full_data: data},
         dataType: 'text'})
