@@ -459,20 +459,13 @@ const save_buffer = {
   type: jsPsychHtmlKeyboardResponse,
   on_start: function(){
     // save data
-    console.log(jsPsych.data.get().select('subject').values[0])
-    //jsPsych.data.get().select('email').values[0]
-    saveData(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
+    saveDataNES(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().csv());
   },
   stimulus: "Please wait a moment...",
   trial_duration: 5000,
   choices: ['']
 }
 
-/*
-saveData functions because it seems to not work all the time? 
-
-
-*/
 
 const end_experiment = {
   type: jsPsychHtmlButtonResponse,
