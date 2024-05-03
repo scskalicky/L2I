@@ -23,12 +23,12 @@ $name = "data/JP_data/" . $subject . "_results.csv";
 file_put_contents($name, $data);
 
 // open master csv file
-$handle = fopen("JP_data/completions.csv", "a");
+//$handle = fopen("JP_data/completions.csv", "a");
 
 // append new row containing subject name and email
-fputcsv($handle, $line); # $line is an array of strings (array|string[])
+//fputcsv($handle, $line); # $line is an array of strings (array|string[])
 
 // close file
-fclose($handle);
+//fclose($handle);
 
 ?>
