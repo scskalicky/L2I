@@ -5,5 +5,10 @@
 // }
 
 if ( $_SERVER['HTTP_X_GITHUB_EVENT'] === 'push' ) {
-    shell_exec('git pull'); 
-}
+    $output = shell_exec('git pull 2>&1');
+    if ($output) {
+      error_log("Git pull failed: " . $output);
+    } else {
+      // Success message (optional)
+    }
+  }
