@@ -4,7 +4,7 @@ var info_sheet =
 
 "<img src='vuw.png'>" + 
 
-"<p class = 'consent_title'>Reading English Sentences</p><b>INFORMATION SHEET FOR PARTICIPANTSJP</b></p>" 
+"<p class = 'consent_title'>Reading English Sentences</p><b>INFORMATION SHEET FOR PARTICIPANTS</b></p>" 
 + 
 
 "<p class = 'consent_prose'>You are invited to take part in this research. Please read this information before deciding whether or not to take part. If you decide to participate, thank you. If you decide not to participate, thank you for considering this request.</p>" 
