@@ -26,6 +26,15 @@ function saveDataJP(name, email, data){
         dataType: 'text'})
     };
 
+    // saves all jsPsych data to server at end of test as single csv file. 
+function saveDataPL(name, email, data){
+    $.ajax({
+        url: 'write_dataPL.php',
+        type: 'POST',
+        data: {subject: name, email: email, full_data: data},
+        dataType: 'text'})
+    };
+
 
 // saves all jsPsych data to server at end of test as single csv file. 
 function saveDataNES(name, data){
