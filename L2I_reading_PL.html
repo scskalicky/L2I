@@ -84,9 +84,7 @@ const information_sheet = {
       jsPsych.data.addProperties({email: jsPsych.data.getURLVariable('em')})
       jsPsych.data.addProperties({subject:  jsPsych.data.getURLVariable('fn').concat('_', jsPsych.data.getURLVariable('sn'), '_', performance.now())})
       jsPsych.data.addProperties({university: jsPsych.data.getURLVariable('uni')}),
-      console.log(data.subject)
-      console.log(data.email)
-      console.log(data.university)
+      console.log(jsPsych.data.get())
      // createData(data.subject, data.email)
     
     }
