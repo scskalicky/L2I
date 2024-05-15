@@ -76,7 +76,7 @@ var consent_sheet =
 
 "<p class = 'consent_prose'> Researchers: Anna Siyanova and Stephen Skalicky, Victoria University of Wellington.</p>" + 
 
-"<ul class = 'consent_prose'><li>I have read the Information Sheet and the project has been explained to me.</li><li>I agree to take part in the study, , as detailed in the Information sheet.</li></ul>" + 
+"<ul class = 'consent_prose'><li>I have read the Information Sheet and the project has been explained to me.</li><li>I agree to take part in the study, as detailed in the Information sheet.</li></ul>" + 
 
 "<p class = 'consent_prose'>I understand that:</p>" +
 
