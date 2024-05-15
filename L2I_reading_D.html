@@ -30,7 +30,7 @@
     message_progress_bar: '<span style = "color:red";><b>DO NOT REFRESH YOUR BROWSER OR HIT BACK!<span></b>',
     on_finish: function(data){
         // relocate to Qualtrics ending survey, for email triggers. 
-        window.location = "www.vwu.ac.nz" + jsPsych.data.get().select('subject').values[0] + '&subject_email=' + jsPsych.data.get().select('email').values[0]
+        window.location = "https://vuw.qualtrics.com/jfe/form/SV_cNEAZYB5BQkX2fk?subject=" + jsPsych.data.get().select('subject').values[0] + '&subject_email=' + jsPsych.data.get().select('email').values[0]
     
     },
   });
@@ -554,7 +554,7 @@ const save_buffer = {
     // save data
     console.log(jsPsych.data.get().select('subject').values[0])
     //jsPsych.data.get().select('email').values[0]
-    saveDataJP(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
+    saveDataDutch(jsPsych.data.get().select('subject').values[0],jsPsych.data.get().select('email').values[0],jsPsych.data.get().csv());
   },
   stimulus: "Please wait a moment...",
   trial_duration: 5000,
