@@ -1,4 +1,4 @@
-/* recreate the VUW inforamtion sheets in HTML*/
+/* recreate the VUW information sheets in HTML*/
 
 var info_sheet = 
 
